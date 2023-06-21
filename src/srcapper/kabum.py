@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen, urlretrieve
+from urllib.request import urlretrieve
 from banco import Banco
-import time
 import undetected_chromedriver as uc
 import chromedriver_autoinstaller
 
