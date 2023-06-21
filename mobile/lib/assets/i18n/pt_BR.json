@@ -1,0 +1,38 @@
+{
+    "app_name": "Instagram",
+    
+    "username" : "Usuário",
+    "username_hint" : "Informe o nome do seu usuário",
+    "password" : "Senha",
+    "password_hint" : "Informe a sua senha",
+    "repassword" : "Repita a senha",
+    "repassword_hint" : "Informe a sua senha",
+    "login" : "Login",
+    "forgot_password" : "Esqueci a senha!",
+    "username_required" : "O usuário é obrigatório",
+    "password_required" : "A senha é obrigatória",
+    "login_password_required" : "A senha é obrigatória",
+    "login_password_minimun" : "A senha tem menos de 4 caracteres",
+
+    "divider_text" : "ou",
+    "signup" : "Cadastrar",
+
+    "email" : "Email",
+    "email_hint": "Informe seu Email",
+
+    "birthdate" : "Data de nascimento",
+    "birthdate_hint": "Informe sua data de nascimento",
+
+    "phone" : "Telefone",
+    "phone_hint": "Informe seu número de telefone",
+
+    "name" : "Nome",
+    "name_hint": "Informe seu nome",
+
+    "send" : "Enviar",
+
+    "welcome" : "Bem vindo ao App de taxa de acertos no CS-GO",
+    "about_app" : "Este aplicativo tem por finalidade auxiliar\n na previsão de acertos em jogos do CS-GO obtendo a\n maior taxa de acertos nos jogos.",
+    "about_app2": "Saber quais times irão vencer está sendo\n mais lucrativos e algo essencial para o crescimento\n aumentando os lucros.",
+    "continue" : "Continuar"
+}

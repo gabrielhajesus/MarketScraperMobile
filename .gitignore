@@ -1,92 +1,92 @@
-.history
-data/
-src/site/static/img/
+scraper/.history
+scraper/data/
+scraper/src/site/static/img/
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+scraper/__pycache__/
+scraper/*.py[cod]
+scraper/*$py.class
 
 # C extensions
-*.so
+scraper/*.so
 
 # Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+scraper/.Python
+scraper/build/
+scraper/develop-eggs/
+scraper/dist/
+scraper/downloads/
+scraper/eggs/
+scraper/.eggs/
+scraper/lib/
+scraper/lib64/
+scraper/parts/
+scraper/sdist/
+scraper/var/
+scraper/wheels/
+scraper/pip-wheel-metadata/
+scraper/share/python-wheels/
+scraper/*.egg-info/
+scraper/.installed.cfg
+scraper/*.egg
+scraper/MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+scraper/*.manifest
+scraper/*.spec
 
 # Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+scraper/pip-log.txt
+scraper/pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
+scraper/htmlcov/
+scraper/.tox/
+scraper/.nox/
+scraper/.coverage
+scraper/.coverage.*
+scraper/.cache
+scraper/nosetests.xml
+scraper/coverage.xml
+scraper/*.cover
+scraper/*.py,cover
+scraper/.hypothesis/
+scraper/.pytest_cache/
 
 # Translations
-*.mo
-*.pot
+scraper/*.mo
+scraper/*.pot
 
 # Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+scraper/*.log
+scraper/local_settings.py
+scraper/db.sqlite3
+scraper/db.sqlite3-journal
 
 # Flask stuff:
-instance/
-.webassets-cache
+scraper/instance/
+scraper/.webassets-cache
 
 # Scrapy stuff:
-.scrapy
+scraper/.scrapy
 
 # Sphinx documentation
-docs/_build/
+scraper/docs/_build/
 
 # PyBuilder
-target/
+scraper/target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+scraper/.ipynb_checkpoints
 
 # IPython
-profile_default/
-ipython_config.py
+scraper/profile_default/
+scraper/ipython_config.py
 
 # pyenv
-.python-version
+scraper/.python-version
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
@@ -96,41 +96,41 @@ ipython_config.py
 #Pipfile.lock
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
+scraper/__pypackages__/
 
 # Celery stuff
-celerybeat-schedule
-celerybeat.pid
+scraper/celerybeat-schedule
+scraper/celerybeat.pid
 
 # SageMath parsed files
-*.sage.py
+scraper/*.sage.py
 
 # Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+scraper/.env
+scraper/.venv
+scraper/env/
+scraper/venv/
+scraper/ENV/
+scraper/env.bak/
+scraper/venv.bak/
 
 # Spyder project settings
-.spyderproject
-.spyproject
+scraper/.spyderproject
+scraper/.spyproject
 
 # Rope project settings
-.ropeproject
+scraper/.ropeproject
 
 # mkdocs documentation
-/site
+scraper/site
 
 # mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+scraper/.mypy_cache/
+scraper/.dmypy.json
+scraper/dmypy.json
 
 # Pyre type checker
-.pyre/
+scraper/.pyre/
 
 
 
