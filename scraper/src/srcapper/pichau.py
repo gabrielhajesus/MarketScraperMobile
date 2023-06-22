@@ -18,7 +18,7 @@ options.add_argument('--ignore-certificate-errors')
 options.add_argument('--headless')
 driver = uc.Chrome(use_subprocess=True, options=options,
                    version_main=version_main)
-# driver.maximize_window()
+driver.maximize_window()
 print("Chrome Inicializado")
 
 # Obtendo a campanha de promoção atual
@@ -59,7 +59,7 @@ for campanhaAtual in campanhas:
     driver.get(campanhaAtual)
 
     # Pegando o tamanho completo da página
-    SCROLL_PAUSE_TIME = 3
+    SCROLL_PAUSE_TIME = 4
     last_height = driver.execute_script("return document.body.scrollHeight")
     print(range(last_height))
     while True:
@@ -90,6 +90,7 @@ for campanhaAtual in campanhas:
     cards = []
     imagens = []
     erros = []
+    j = 1
 
     # Coletando as informações dos CARDS
     for anuncio in anuncios:
@@ -99,46 +100,48 @@ for campanhaAtual in campanhas:
         card['name'] = anuncio.find(
             'div', {'class': 'MuiCardContent-root'}).find('h2').getText()
 
-        try:
-            # Valor antigo
-            preco_antigo = anuncio.find('div', {'class': 'MuiCardContent-root'}).find(
-                'div').find('div').find('div').find('div').getText()
-            preco_antigo = preco_antigo.split(' ')
-            preco_antigo.pop()
-            del preco_antigo[0]
-            preco_antigo = " ".join(preco_antigo)
+        # try:
+        # Valor antigo
+        preco_antigo = anuncio.find('div', {'class': 'MuiCardContent-root'}).find(
+            'div').find('div').find('div').find('div').getText()
+        preco_antigo = preco_antigo.split(' ')
+        preco_antigo.pop()
+        del preco_antigo[0]
+        preco_antigo = " ".join(preco_antigo)
 
-            card['old_price_card'] = preco_antigo
+        card['old_price_card'] = preco_antigo
 
-            # Valor Completo
-            preco = anuncio.find('div', {'class': 'MuiCardContent-root'}
-                                 ).div.div.div.div.find_next_sibling().find_next_sibling().getText()
+        # Valor Completo
+        preco = anuncio.find('div', {'class': 'MuiCardContent-root'}
+                             ).div.div.div.div.find_next_sibling().find_next_sibling().getText()
 
-            card['price_card'] = preco
+        card['price_card'] = preco
 
-            # Preço parcelado
-            desconto = anuncio.find('div', {'class': 'MuiCardContent-root'}
-                                    ).div.div.div.span.find_next_sibling().find_next_sibling().getText()
-            preco_parcelado = anuncio.find('div', {
-                'class': 'MuiCardContent-root'}).div.div.find_next_sibling().find_next_sibling().div.div.getText()
-            parcelado = anuncio.find('div', {'class': 'MuiCardContent-root'}
-                                     ).div.div.find_next_sibling().find_next_sibling().div.span.getText()
-            card['price_text_card'] = preco_parcelado + \
-                ' ' + parcelado + ' e avista ' + desconto
+        # Preço parcelado
+        desconto = anuncio.find('div', {'class': 'MuiCardContent-root'}
+                                ).div.div.div.span.find_next_sibling().find_next_sibling().getText()
+        preco_parcelado = anuncio.find('div', {
+            'class': 'MuiCardContent-root'}).div.div.find_next_sibling().find_next_sibling().div.div.getText()
+        parcelado = anuncio.find('div', {'class': 'MuiCardContent-root'}
+                                 ).div.div.find_next_sibling().find_next_sibling().div.span.getText()
+        card['price_text_card'] = preco_parcelado + \
+            ' ' + parcelado + ' e avista ' + desconto
 
-            # Tag da Promocao
-            card['tag_campanha'] = nomes_campanha[i]
+        # Tag da Promocao
+        card['tag_campanha'] = nomes_campanha[i]
 
-            # Link do produto
-            card['link_produto'] = 'https://www.pichau.com.br' + \
-                anuncio.get('href')
+        # Link do produto
+        card['link_produto'] = 'https://www.pichau.com.br' + \
+            anuncio.get('href')
 
-            # Loja da pichau
-            card['loja'] = 'Pichau'
+        # Loja da pichau
+        card['loja'] = 'Pichau'
 
-            cards.append(card)
-        except:
-            continue
+        cards.append(card)
+        j = j + 1
+        # except:
+        """print('erro no produto' + str(j))
+        quit()"""
 
         # Adicionando as imagens a lista
         try:
@@ -153,12 +156,6 @@ for campanhaAtual in campanhas:
     opener = URLopener()
     opener.addheader(
         'User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36')
-
-    with open("saida_texto.txt", "w", encoding="utf-8") as arquivo:
-        arquivo.write(erros)
-
-    with open("saida_texto.txt", "w", encoding="utf-8") as arquivo:
-        arquivo.write(imagem)
 
     for imagem in imagens:
         nome = imagem['nome']

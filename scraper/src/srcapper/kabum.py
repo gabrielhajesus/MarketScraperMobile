@@ -118,7 +118,7 @@ for campanhaAtual in linkcampanhas:
                 else:
                     # Adicionando resultado a lista cards
                     for produto in listaProdutosKabum:
-                        if card['name'] == produto['name'] and card['price_card'] == produto['price_card']:
+                        if card['name'].split(' ')[-1] == produto['name'].split(' ')[-1] and card['price_card'] == produto['price_card']:
                             print("Produto repetido numero: " +
                                   str(n) + ", produto ->" + card['name'])
                             n = n+1
@@ -135,7 +135,7 @@ for campanhaAtual in linkcampanhas:
         # Inserindo o resultado no banco de dados
         with open("saida_texto.txt", "w", encoding="utf-8") as arquivo:
             arquivo.write(str(cards))
-        kabum.insert_many(cards)
+        # kabum.insert_many(cards)
 
 # Fechando o Driver
 driver.close()
