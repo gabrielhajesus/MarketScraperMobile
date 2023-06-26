@@ -43,6 +43,7 @@ def inserirnobanco(item={}, produtos=produtos):
         if item['loja'] == 'Kabum':
             produto = {
                 'name': item['name'],
+                'imagem': item['imagem'],
                 'search_name': nome_de_busca,
                 'old_price': item['old_price_card'],
                 'menor_preco': item['price_card'],
@@ -59,6 +60,7 @@ def inserirnobanco(item={}, produtos=produtos):
         if item['loja'] == 'Pichau':
             produto = {
                 'name': item['name'],
+                'imagem': item['imagem'],
                 'search_name': nome_de_busca,
                 'old_price': item['old_price_card'],
                 'menor_preco': item['price_card'],

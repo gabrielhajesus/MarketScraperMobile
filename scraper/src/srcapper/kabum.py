@@ -27,6 +27,9 @@ def adiciona(anuncio, nomeLoja, nomecampanha):
     card['link_produto'] = 'https://www.kabum.com.br' + \
         anuncio.find('a').get('href')
 
+    # link da imagem
+    card['imagem'] = anuncio.find('img').get('src')
+
     # Loja da kabum
     card['loja'] = nomeLoja
 
@@ -126,11 +129,11 @@ for campanhaAtual in linkcampanhas:
                         else:
                             cards.append(card)
                 # Adicionando as imagens ao nosso programa
-                image = anuncio.find('img', {'class': 'imageCard'})
+                """image = anuncio.find('img', {'class': 'imageCard'})
                 nome = card['name']
                 nome = Banco.convertenome(nome)
                 urlretrieve(image.get('src'),
-                            './src/site/static/img/' + nome + '.jpg')
+                            './src/site/static/img/' + nome + '.jpg')"""
 
         # Inserindo o resultado no banco de dados
         with open("saida_texto.txt", "w", encoding="utf-8") as arquivo:
