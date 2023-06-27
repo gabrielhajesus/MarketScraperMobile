@@ -1,6 +1,5 @@
 scraper/.history
 scraper/data/
-scraper/src/site/static/img/
 
 # Byte-compiled / optimized / DLL files
 scraper/__pycache__/
@@ -121,8 +120,6 @@ scraper/.spyproject
 # Rope project settings
 scraper/.ropeproject
 
-# mkdocs documentation
-scraper/site
 
 # mypy
 scraper/.mypy_cache/
@@ -132,6 +129,7 @@ scraper/dmypy.json
 # Pyre type checker
 scraper/.pyre/
 
+scraper/
 
 
 
