@@ -9,8 +9,8 @@ class AppModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        //ModuleRoute('/', module: OnboardModule()),
-        ModuleRoute('/', module: HomeModule()),
+        ModuleRoute('/', module: OnboardModule()),
+        ModuleRoute('/home', module: HomeModule()),
         ModuleRoute('/auth', module: AuthModule()),
       ];
 }

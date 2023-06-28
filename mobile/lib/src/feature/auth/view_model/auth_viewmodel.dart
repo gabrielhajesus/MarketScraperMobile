@@ -1,119 +1,105 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
-
 import '../model/auth_usecase.dart';
+import '../model/domain/user.dart';
 
-part 'auth_viewmodel.g.dart';
+class AuthViewModel {
+  final AuthUseCase _authUseCase;
 
-class AuthViewmodel = AuthViewmodelBase with _$AuthViewmodel;
+  AuthViewModel(this._authUseCase);
 
-abstract class AuthViewmodelBase with Store {
-  final _usecase = Modular.get<AuthUseCase>();
-  final error = LoginError();
-
-  @observable
-  String email = "";
-
-  @action
-  void setEmail(String value) => email = value;
-
-  @observable
-  String password = "";
-
-  @action
-  void setPassword(String value) => password = value;
-
-  @observable
-  bool passwordVisible = false;
-
-  @action
-  void togglePasswordVisibility() => passwordVisible = !passwordVisible;
-
-  @action
-  void validateUsername() {
-    error.email = _usecase.validateEmail(email);
-  }
-
-  @action
-  void validatePassword() {
-    error.password = _usecase.validatePassword(password);
-  }
-
-  @observable
-  bool loading = false;
-
-  @observable
-  bool loggedIn = false;
-
-  @computed
-  bool get isEmailValid => RegExp(
-          r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-      .hasMatch(email);
-
-  @computed
-  bool get isPasswordValid => password.length >= 6;
-
-  @computed
-  Function get loginPressed =>
-      (isEmailValid && isPasswordValid && !loading) ? login : login;
-
-  @action
-  Future<void> login() async {
-    loading = true;
+  Future<void> login(User user, BuildContext context) async {
     try {
-      await _usecase.login(email, password);
-    } on UnimplementedError {
-    } finally {
-      loading = false;
+      await _authUseCase.login(user);
+      Modular.to.pushReplacementNamed('/home');
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Erro de login'),
+            content: Text(
+                'Ocorreu um erro durante o login. Verifique suas credenciais e tente novamente.'),
+            actions: [
+              ElevatedButton(
+                child: Text('Fechar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
-  @action
-  Future<void> signup() async {
-    loading = true;
+  Future<void> register(User user, BuildContext context) async {
     try {
-      await _usecase.signup(email, password);
-    } on UnimplementedError {
-    } finally {
-      loading = false;
+      await _authUseCase.register(user);
+      Modular.to.pushReplacementNamed('/auth/login');
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Erro de registro'),
+            content: Text(
+                'Ocorreu um erro durante o registro. Verifique seus dados e tente novamente.'),
+            actions: [
+              ElevatedButton(
+                child: Text('Fechar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
-  @action
-  Future<void> forgotpass() async {
-    loading = true;
+  Future<void> resetPassword(String email, BuildContext context) async {
     try {
-      await _usecase.forgotpass(email);
-    } on UnimplementedError {
-    } finally {
-      loading = false;
+      await _authUseCase.resetPassword(email);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Recuperação de senha'),
+            content: Text(
+                'Um email com as instruções para redefinir sua senha foi enviado para o seu endereço de email.'),
+            actions: [
+              ElevatedButton(
+                child: Text('Fechar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Erro de recuperação de senha'),
+            content: Text(
+                'Ocorreu um erro durante a recuperação de senha. Verifique seu endereço de email e tente novamente.'),
+            actions: [
+              ElevatedButton(
+                child: Text('Fechar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
-  }
-
-  @action
-  void logout() {
-    loggedIn = false;
-  }
-}
-
-class LoginError = _LoginErrorBase with _$LoginError;
-
-abstract class _LoginErrorBase with Store {
-  @observable
-  String? email;
-
-  @observable
-  String? password;
-
-  @observable
-  String? login;
-
-  @computed
-  bool get hasErrors => email != null || password != null || login != null;
-
-  void clear() {
-    email = null;
-    password = null;
-    login = null;
   }
 }

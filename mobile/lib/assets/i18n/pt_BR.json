@@ -1,8 +1,8 @@
 {
-    "app_name": "Instagram",
+    "app_name": "CSGO",
     
-    "username" : "Usuário",
-    "username_hint" : "Informe o nome do seu usuário",
+    "fullname" : "Usuário",
+    "fullname_hint" : "Informe o seu nome",
     "password" : "Senha",
     "password_hint" : "Informe a sua senha",
     "repassword" : "Repita a senha",
