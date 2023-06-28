@@ -129,7 +129,6 @@ scraper/dmypy.json
 # Pyre type checker
 scraper/.pyre/
 
-scraper/
 
 
 
