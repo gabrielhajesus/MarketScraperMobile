@@ -30,7 +30,8 @@ class HomePage extends StatelessWidget {
               child: const Text(
                 'Nenhum dado encontrado',
                 textAlign: TextAlign.center,
-              ));
+              ),
+              );
         }
 
         return Scaffold(
