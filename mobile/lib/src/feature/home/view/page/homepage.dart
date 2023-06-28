@@ -1,98 +1,108 @@
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-import '../../../../../mongodb.dart';
-
-//List<Product> products = collection('find');
-connect() async {
-  var db = await Db.create(
-      'mongodb+srv://gabrielhjalberto:gabriel123@cluster0.t8961c5.mongodb.net/?Market_Scraper_Mobile?retryWrites=true&w=majority');
-  await db.open();
-  var status = db.serverStatus();
-  print(status);
-  print("Conectou");
-  final collection = db.collection('produtos');
-}
-
-class Product {
-  final int id;
-  final String name;
-  final String image;
-  final double price;
-  int quantity;
-
-  Product(
-      {required this.id,
-      required this.name,
-      required this.image,
-      required this.price,
-      this.quantity = 0});
-}
-
-List<Product> products = [
-  Product(
-      id: 1,
-      name: 'Champion',
-      image:
-          'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80',
-      price: 55.5),
-  Product(
-      id: 2,
-      name: 'Stark',
-      image:
-          'https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1624&q=80',
-      price: 65.5),
-];
+import '../../../../commom/mongodb.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("PromoHunter"),
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(
-          products.length,
-          (index) {
-            return Container(
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: MongoDataBase().fetchData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
               alignment: Alignment.center,
-              child: SelectCard(product: products[index]),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
+              child: const CircularProgressIndicator());
+        }
 
-class SelectCard extends StatelessWidget {
-  const SelectCard({super.key, required this.product});
-  final Product product;
+        if (snapshot.hasError) {
+          return Container(
+              alignment: Alignment.center,
+              child: const Text('Erro ao carregar os dados'));
+        }
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        color: Colors.orange,
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image.network(
-                product.image,
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-              Text(
-                product.name,
-              ),
-              Text(
-                '\$${product.price}',
+        final data = snapshot.data;
+
+        if (data!.isEmpty) {
+          return Container(
+              alignment: Alignment.center,
+              child: const Text(
+                'Nenhum dado encontrado',
+                textAlign: TextAlign.center,
+              ));
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('PromoHunter'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  print("pesquisando");
+                },
               ),
             ],
           ),
-        ));
+          body: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+            ),
+            itemCount: 30,
+            itemBuilder: (context, index) {
+              final item = data[index];
+              return GridTile(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Image.network(item['imagem'])),
+                      Text(item['name'],
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                          overflow: TextOverflow.ellipsis),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          if (item['desconto'] != 0) ...[
+                            Text(
+                              "${item['desconto']}%",
+                              style: const TextStyle(fontSize: 12),
+                              textAlign: TextAlign.end,
+                            )
+                          ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(item['old_price'],
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 16),
+                                  overflow: TextOverflow.ellipsis),
+                              Text(item['menor_preco'],
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 16),
+                                  overflow: TextOverflow.ellipsis),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }
