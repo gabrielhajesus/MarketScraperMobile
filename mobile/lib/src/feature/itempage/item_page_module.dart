@@ -8,10 +8,9 @@ class ItemPageModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute(
-      '/',
-      child: (_, args) => ItemDetailsPage(
-      ),
-    ),
+    ChildRoute('/',
+        child: (_, args) => ItemDetailsPage(
+              item: args.data,
+            )),
   ];
 }

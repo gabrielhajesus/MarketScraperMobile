@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:predict/src/feature/itempage/item_page_module.dart';
 import 'feature/auth/auth_module.dart';
 import 'feature/home/home_module.dart';
 import 'feature/onboard/onboard_module.dart';
@@ -9,8 +10,9 @@ class AppModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        //ModuleRoute('/', module: OnboardModule()),
-        ModuleRoute('/', module: HomeModule()),
+        ModuleRoute('/', module: OnboardModule()),
+        ModuleRoute('/home', module: HomeModule()),
         ModuleRoute('/auth', module: AuthModule()),
+        ModuleRoute('/itempage', module: ItemPageModule()),
       ];
 }

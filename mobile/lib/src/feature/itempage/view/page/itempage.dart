@@ -4,8 +4,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../model/domain/item.dart';
 
 class ItemDetailsPage extends StatefulWidget {
+  final Map<String, dynamic> item;
+  ItemDetailsPage({required this.item});
   @override
-  _ItemDetailsPageState createState() => _ItemDetailsPageState(item: {});
+  _ItemDetailsPageState createState() => _ItemDetailsPageState(item: item);
 }
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
@@ -48,11 +50,10 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   }
 
   Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await launchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Não foi possível abrir o link: $url';
     }
   }
 }
-
