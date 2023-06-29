@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../model/domain/item.dart';
 
 class ItemDetailsPage extends StatefulWidget {
   final Map<String, dynamic> item;

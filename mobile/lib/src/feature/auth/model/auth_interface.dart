@@ -1,7 +1,9 @@
 import 'domain/user.dart';
 
-abstract class IAuth {
+abstract class AuthInterface {
   Future<User> login(User user);
-  Future<User> signup(User user);
-  Future<User> forgotpass(User user);
+
+  Future<User> register(User user);
+
+  Future<User> resetPassword(String email);
 }

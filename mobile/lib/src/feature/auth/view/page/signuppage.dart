@@ -1,99 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:localization/localization.dart';
-import 'package:predict/src/commom/form_text_field.dart';
+import '../../model/domain/user.dart';
 import '../../view_model/auth_viewmodel.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
-
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late ColorScheme _colors;
-  late ThemeData _theme;
-  final store = AuthViewmodel();
-
-  Widget get _loadingIndicator => Visibility(
-        visible: store.loading,
-        child: const LinearProgressIndicator(
-          backgroundColor: Colors.blueGrey,
-        ),
-      );
-
-  Widget get _password => widget.createFormField(
-        title: 'password'.i18n(),
-        theme: _theme,
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        hint: 'password_hint'.i18n(),
-        enabled: !store.loading,
-        onChange: (value) => store.password = value,
-      );
-
-  Widget get _repassword => widget.createFormField(
-        title: 'repassword'.i18n(),
-        theme: _theme,
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        hint: 'repassword_hint'.i18n(),
-        enabled: !store.loading,
-        onChange: (value) => store.password = value,
-      );
-
-  Widget get _email => widget.createFormField(
-        title: 'email'.i18n(),
-        theme: _theme,
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-        hint: 'email_hint'.i18n(),
-        enabled: !store.loading,
-        onChange: (value) => store.email = value,
-      );
-
-  final _signupButton = Container(
-    margin: const EdgeInsets.fromLTRB(30, 15, 30, 5),
-    width: double.infinity,
-    height: 56,
-    child: ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-            const Color.fromARGB(201, 14, 2, 238)),
-      ),
-      onPressed: () {},
-      child: Text('signup'.i18n(), style: const TextStyle(color: Colors.white)),
-    ),
-  );
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    _theme = Theme.of(context);
-    _colors = _theme.colorScheme;
+    final viewModel = Modular.get<AuthViewModel>();
 
     return Scaffold(
       appBar: AppBar(title: Text('signup'.i18n())),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Observer(builder: (_) {
-            return Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  _loadingIndicator,
-                  const SizedBox(height: 5),
-                  _email,
-                  _password,
-                  _repassword,
-                  _signupButton
-                ],
-              ),
-            );
-          }),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _fullNameController,
+              decoration: InputDecoration(labelText: 'fullname'.i18n()),
+            ),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'email'.i18n()),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: 'password'.i18n()),
+              obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              child: Text('signup'.i18n()),
+              onPressed: () {
+                final email = _emailController.text;
+                final password = _passwordController.text;
+                final fullname = _fullNameController.text;
+                viewModel.register(
+                    User(
+                        email: email,
+                        fullName: fullname,
+                        password: password,
+                        token: ','),
+                    context);
+              },
+            ),
+          ],
         ),
       ),
     );

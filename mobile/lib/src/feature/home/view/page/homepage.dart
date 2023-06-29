@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:predict/src/feature/itempage/model/domain/item.dart';
 import 'package:predict/src/feature/itempage/view/page/itempage.dart';
 import '../../../../commom/mongodb.dart';
 
@@ -33,20 +32,12 @@ class _HomePageState extends State<HomePage> {
 
         if (data!.isEmpty) {
           return Container(
-<<<<<<< HEAD
             alignment: Alignment.center,
             child: const Text(
               'Nenhum dado encontrado',
               textAlign: TextAlign.center,
             ),
           );
-=======
-              alignment: Alignment.center,
-              child: const Text(
-                'Nenhum dado encontrado',
-                textAlign: TextAlign.center,
-              ));
->>>>>>> b3936d46fe0042eb6ed8038dcf7680c76378059b
         }
 
         return Scaffold(
