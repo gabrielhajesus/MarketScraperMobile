@@ -23,19 +23,37 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              item['name'],
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            SizedBox(
+                height: 100, width: 100, child: Image.network(item['imagem'])),
+            Text(item['name'],
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                overflow: TextOverflow.ellipsis),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                if (item['desconto'] != 0) ...[
+                  Text(
+                    "${item['desconto']}%",
+                    style: const TextStyle(fontSize: 12),
+                    textAlign: TextAlign.end,
+                  )
+                ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(item['old_price'],
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 16),
+                        overflow: TextOverflow.ellipsis),
+                    Text(item['menor_preco'],
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 16),
+                        overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(height: 16),
-            Text(
-              item['old_price'],
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
                 _launchURL(item['link']);

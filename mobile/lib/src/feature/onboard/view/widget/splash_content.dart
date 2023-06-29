@@ -13,7 +13,6 @@ class SplashContent extends StatelessWidget {
     return Column(
       children: <Widget>[
         const Spacer(),
-        Image.asset('lib/assets/images/title.png', scale: 8),
         Text(
           text!,
           textAlign: TextAlign.center,
@@ -21,8 +20,8 @@ class SplashContent extends StatelessWidget {
         const Spacer(flex: 2),
         Image.asset(
           image!,
-          height: 180,
-          width: 180,
+          height: 300,
+          width: 300,
         ),
       ],
     );
